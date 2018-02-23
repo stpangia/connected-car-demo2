@@ -1,0 +1,15 @@
+extends layout
+
+block content
+
+  h2 Oil Level &amp; Tire Pressure Reminders
+
+  p Get a monthly SMS reminder when you stop at a gas station
+
+  .btn-group
+    a.btn(href='https://dash.by/api/auth/authorize?response_type=code&client_id='+process.env.DASH_CLIENT_ID+'&scope=routes%20stats%20trips%20user&state=')
+      img(src="/images/connect_dash.png")
+
+    a.btn(href='https://accounts.automatic.com/oauth/authorize/?client_id='+process.env.AUTOMATIC_CLIENT_ID+'&response_type=code&scope=scope:behavior%20scope:location%20scope:public%20scope:trip%20scope:user:profile%20scope:vehicle:profile%20scope:vehicle:events%20scope:vehicle:vin&state=')
+      img(src="/images/connect_automatic.svg")
+

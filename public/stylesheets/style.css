@@ -1,0 +1,16 @@
+body {
+  padding: 10px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.btn-group .btn:not(:first-child) {
+	margin-left: 10px;
+}
+
+.btn img {
+	width: 300px;
+}

@@ -1,0 +1,12 @@
+extends layout
+
+block content
+
+  h2 Oil Level &amp; Tire Pressure Reminders
+
+  p Create or update your profile
+
+  if user
+    p #{user.id}
+  else 
+    p new user
