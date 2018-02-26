@@ -15,10 +15,39 @@ a {
 	width: 300px;
 }
 
+form {
+	background-color: rgba(200, 200, 200, 0.6);
+	border-radius: 8px;
+	padding: 1em;
+	width: 400px;
+}
+
+form p {
+	margin-top: 0;
+}
+
 label {
 	margin-right:6px;
 }
 
 button[type="submit"] {
 	margin-left:6px;
+}
+
+#msg {
+	background-color: #FFF;
+	margin: 1em 0;
+	padding: 0.4em;
+}
+
+#msg:before {
+	content: '>';
+}
+
+#msg.warn {
+	color: #EF3333;
+}
+
+#msg.success {
+	color: #3333EF;
 }

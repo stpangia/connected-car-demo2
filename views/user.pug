@@ -4,11 +4,15 @@ block content
 
   h2 Oil Level &amp; Tire Pressure Reminders
 
-  h4 Get a monthly SMS reminder when you stop at a gas station
+  p Get a monthly SMS reminder when you stop at a gas station
 
-  p Create or update your profile
+  form(action='/user' method='POST')
 
-  form(action='#' method='POST')
+    p Create or update your profile
+
+    if flash
+      #msg(class=flash.status)= flash.message
+
     label(for='mobile') Cell #
     if user
       input(type='text' name='mobile' value=user.mobile)
