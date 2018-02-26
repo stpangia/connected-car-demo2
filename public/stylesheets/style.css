@@ -14,3 +14,11 @@ a {
 .btn img {
 	width: 300px;
 }
+
+label {
+	margin-right:6px;
+}
+
+button[type="submit"] {
+	margin-left:6px;
+}
