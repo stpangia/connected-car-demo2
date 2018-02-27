@@ -7,6 +7,10 @@ a {
   color: #00B7FF;
 }
 
+td {
+	padding: 4px 6px 4px 0;
+}
+
 .btn-group .btn:not(:first-child) {
 	margin-left: 10px;
 }
@@ -15,7 +19,7 @@ a {
 	width: 300px;
 }
 
-form {
+form.background {
 	background-color: rgba(200, 200, 200, 0.6);
 	border-radius: 8px;
 	padding: 1em;
@@ -31,23 +35,41 @@ label {
 }
 
 button[type="submit"] {
-	margin-left:6px;
+	/*margin-left:6px;*/
 }
 
-#msg {
+.form-row {
+	margin-bottom: 0.8em;
+}
+
+.msg {
 	background-color: #FFF;
 	margin: 1em 0;
 	padding: 0.4em;
 }
-
-#msg:before {
+.msg:before {
 	content: '>';
 }
 
-#msg.warn {
+.msg.warn {
 	color: #EF3333;
 }
 
-#msg.success {
+.msg.success {
 	color: #3333EF;
+}
+
+.col-1 {
+	float: left;
+	width: 40%;
+}
+
+.col-2 {
+	float: left;
+	width: 40%;
+	margin-left: 40px;
+}
+
+.icon {
+	max-height: 26px;
 }

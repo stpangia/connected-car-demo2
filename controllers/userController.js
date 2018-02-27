@@ -30,17 +30,19 @@ exports.user = function(req, res) {
   // Get user
 	device.getUser(req.session.device.user_token)
 		.then(function(body) {
+			// Save Device user ID to session
+			req.session.device.device_user_id = body.id;
 
 			// Check if existing user
 			var dbPromise = Promise.resolve()
 			  .then(() => sqlite.open('./database.sqlite', { Promise }))
 			  .then(function(db){
 			  	var user;
-					db.get('SELECT * FROM users WHERE device_user_id = ?', body.id)
+					db.get('SELECT * FROM users WHERE device_user_id = ?', req.session.device.device_user_id)
 						.then(function (result) {
 							// Save if new user
 							if (!result) {
-								db.run('INSERT INTO users (device_user_id) VALUES (?)', body.id)
+								db.run('INSERT INTO users (device_user_id) VALUES (?)', req.session.device.device_user_id)
 								.then(function (result) {
 									res.render('user'); 
 								})
@@ -60,19 +62,24 @@ exports.user = function(req, res) {
 exports.update = function(req, res) {
 	// sanitize input
 	var mobile = req.body.mobile.replace(/[^0-9]/g,'');
+	var opt_in = !!req.body.opt_in;
 	// validate input 
 	if (mobile.length != 10) {
 		res.render('user', { flash: {status:'warn', message:'Invalid cell number. Enter a 10-digit US phone number.'} }); 
+	} else {
+		// Save user
+		var dbPromise = Promise.resolve()
+			.then(() => sqlite.open('./database.sqlite', { Promise }))
+			.then(function(db){
+				db.run('UPDATE users SET mobile = ?, opt_in = ? WHERE device_user_id = ?', [mobile, opt_in, req.session.device.device_user_id])
+				.then(function () {
+					db.get('SELECT * FROM users WHERE device_user_id = ?', req.session.device.device_user_id)
+						.then(function (result) {
+							res.render('user', { user: result, flash: {status:'success', message:'User profile updated'} }); 	
+						})
+				})
+			});			
 	}
-	// Save user
-	var dbPromise = Promise.resolve()
-		.then(() => sqlite.open('./database.sqlite', { Promise }))
-		.then(function(db){
-			db.run('UPDATE users SET mobile = ? WHERE device_user_id = ?', [mobile, req.session.device.user_token])
-			.then(function (result) {
-				res.render('user', { flash: {status:'success', message:'User profile updated'} }); 
-			})
-		});			
 };	
 
 exports.logout = function(req, res) {

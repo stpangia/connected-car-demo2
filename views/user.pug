@@ -6,20 +6,85 @@ block content
 
   p Get a monthly SMS reminder when you stop at a gas station
 
-  form(action='/user' method='POST')
+  div.col-1 
 
-    p Create or update your profile
+    form.background(action='/user' method='POST')
 
-    if flash
-      #msg(class=flash.status)= flash.message
+      p Create or update your profile
 
-    label(for='mobile') Cell #
-    if user
-      input(type='text' name='mobile' value=user.mobile)
-    else 
-      input(type='text' name='mobile')
-    button(type='submit') Submit
+      if flash
+        div.msg(class=flash.status)= flash.message
+
+      if user
+        div.form-row
+          label(for='mobile') Cell #
+          input(type='text' name='mobile' value=user.mobile)
+        div.form-row
+          label(for='opt_in') Receive alerts
+          input(type='checkbox' name='opt_in' value='1' checked=(user.opt_in ? "checked" : undefined))
+
+      else 
+        div.form-row
+          label(for='mobile') Cell #
+          input(type='text' name='mobile')
+        div.form-row
+          label(for='opt_in') Receive alerts
+          input(type='hidden' name='opt_in' value='0')
+          input(type='checkbox' name='opt_in' value='1' checked)
+
+      button(type='submit') Submit
 
 
+  if user
+    div.col-2
 
+
+        p Simulate 'Ignition Off' event webhook
+
+        table
+          tr
+            td
+              a(href='https://www.google.com/maps/place/40.714495,-73.941731' target="_blank") 
+                img.icon(src='images/icon-location.png') 
+            td(colspan='2') Speedway 
+              small= "(40.714495, -73.941731)"
+            td
+              form(action='/device_callback/dash' method='POST')
+                input(type='hidden' name='latitude' value='40.714495')
+                input(type='hidden' name='longitude' value='-73.941731')
+                input(type='hidden' name='vehicleId' value='')
+                input(type='hidden' name='state' value='off')
+                input(type='hidden' name='date' value='2014-08-22T14:48:35+00:00')
+                button(type='submit') Send webhook
+
+          tr
+            td
+              a(href='https://www.google.com/maps/place/40.720578,-73.944312' target="_blank") 
+                img.icon(src='images/icon-location.png') 
+            td(colspan='2') Sunoco 
+              small= "(40.720578, -73.944312)"
+            td
+              form(action='/device_callback/dash' method='POST')
+                input(type='hidden' name='latitude' value='40.720578')
+                input(type='hidden' name='longitude' value='-73.944312')
+                input(type='hidden' name='vehicleId' value='')
+                input(type='hidden' name='state' value='off')
+                input(type='hidden' name='date' value='2014-08-22T14:48:35+00:00')
+                button(type='submit') Send webhook
+
+
+          form(action='/device_callback/dash' method='POST')
+            tr
+              td 
+                a(href='https://www.google.com/maps/search/gas+station' target="_blank") 
+                  img.icon(src='images/icon-location.png') 
+              td 
+                input(type='text' name='lat' placeholder='latitude')
+              td
+                input(type='text' name='lon' placeholder='longitude')
+              td
+                input(type='hidden' name='vehicleId' value='')
+                input(type='hidden' name='state' value='off')
+                input(type='hidden' name='date' value='2014-08-22T14:48:35+00:00')
+                button(type='submit') Send webhook
 
