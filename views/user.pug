@@ -2,18 +2,11 @@ extends layout
 
 block content
 
-  h2 Oil Level &amp; Tire Pressure Reminders
-
-  p Get a monthly SMS reminder when you stop at a gas station
-
   div.col-1 
 
     form.background(action='/user' method='POST')
 
       p Create or update your profile
-
-      if flash
-        div.msg(class=flash.status)= flash.message
 
       if user
         div.form-row
@@ -49,7 +42,7 @@ block content
             td(colspan='2') Speedway 
               small= "(40.714495, -73.941731)"
             td
-              form(action='/device_callback/dash' method='POST')
+              form(action='/device_callback/dash/simulated' method='POST')
                 input(type='hidden' name='latitude' value='40.714495')
                 input(type='hidden' name='longitude' value='-73.941731')
                 input(type='hidden' name='vehicleId' value='')
@@ -64,7 +57,7 @@ block content
             td(colspan='2') Sunoco 
               small= "(40.720578, -73.944312)"
             td
-              form(action='/device_callback/dash' method='POST')
+              form(action='/device_callback/dash/simulated' method='POST')
                 input(type='hidden' name='latitude' value='40.720578')
                 input(type='hidden' name='longitude' value='-73.944312')
                 input(type='hidden' name='vehicleId' value='')
@@ -73,7 +66,7 @@ block content
                 button(type='submit') Send webhook
 
 
-          form(action='/device_callback/dash' method='POST')
+          form(action='/device_callback/dash/simulated' method='POST')
             tr
               td 
                 a(href='https://www.google.com/maps/search/gas+station' target="_blank") 

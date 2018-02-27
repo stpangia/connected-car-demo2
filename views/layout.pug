@@ -4,4 +4,12 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+
+    h2 Oil Level &amp; Tire Pressure Reminders
+
+    p Get a monthly SMS reminder when you stop at a gas station
+
+    if flash
+      div.msg(class=flash.status)= flash.message
+
     block content
