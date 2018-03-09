@@ -43,10 +43,13 @@ button[type="submit"] {
 }
 
 .msg {
-	background-color: #FFF;
+	background-color: #fcf8e3;
+	border-color: #faf2cc;
+	border-radius: 4px;
 	margin: 1em 0;
 	padding: 0.4em;
 }
+
 .msg:before {
 	content: '>';
 }
