@@ -9,6 +9,11 @@ html
 
     p Get a monthly SMS reminder when you stop at a gas station
 
+    if user
+      p
+        a(href='/logout')
+          | Logout
+
     if flash
       div.msg(class=flash.status)= flash.message
 
