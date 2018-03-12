@@ -8,13 +8,16 @@ block content
 
       p Create or update your profile
 
-      if user
+      if user && user.mobile
         div.form-row
           label(for='mobile') Cell #
           input(type='text' name='mobile' value=user.mobile)
         div.form-row
           label(for='opt_in') Receive alerts
           input(type='checkbox' name='opt_in' value='1' checked=(user.opt_in ? "checked" : undefined))
+        div.form-row
+          label(for='alerted_at') Last alert sent at
+          input(type='text' name='alerted_at' value=user.alerted_at)
 
       else 
         div.form-row
@@ -28,9 +31,8 @@ block content
       button(type='submit') Submit
 
 
-  if user
+  if user && user.mobile
     div.col-2
-
 
         p Simulate 'Ignition Off' event webhook
 
