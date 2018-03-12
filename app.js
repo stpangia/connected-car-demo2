@@ -8,6 +8,8 @@ var session = require('express-session');
 var dotenv = require('dotenv').load();
 var Promise = require('bluebird');
 var sqlite = require('sqlite');
+var flash = require('connect-flash');
+
 
 var index = require('./routes/index');
 
@@ -30,6 +32,7 @@ app.use(session({
   saveUninitialized: true,
   cookie: {maxAge: 31536000000}
 }));
+app.use(flash());
 
 // SQLite init and force migrations on first run
 var dbPromise = Promise.resolve()

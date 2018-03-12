@@ -47,7 +47,7 @@ exports.user = function(req, res) {
 									res.render('user'); 
 								})
 							} else {
-								res.render('user', { user: result }); 
+								res.render('user', { user: result, flash: req.flash() }); 
 							}
 						})
 			  });			
@@ -65,7 +65,8 @@ exports.update = function(req, res) {
 	var opt_in = !!req.body.opt_in;
 	// validate input 
 	if (mobile.length != 10) {
-		res.render('user', { flash: {status:'warn', message:'Invalid cell number. Enter a 10-digit US phone number.'} }); 
+		req.flash('warn', 'Invalid cell number. Enter a 10-digit US phone number.')
+		res.redirect('user');
 	} else {
 		// Save user
 		var dbPromise = Promise.resolve()
@@ -75,7 +76,8 @@ exports.update = function(req, res) {
 				.then(function () {
 					db.get('SELECT * FROM users WHERE device_user_id = ?', req.session.device.device_user_id)
 						.then(function (result) {
-							res.render('user', { user: result, flash: {status:'success', message:'User profile updated'} }); 	
+							req.flash('success', 'User profile updated')
+							res.redirect('user');
 						})
 				})
 			});			

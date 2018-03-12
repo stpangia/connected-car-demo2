@@ -15,6 +15,9 @@ html
           | Logout
 
     if flash
-      div.msg(class=flash.status)= flash.message
+      if flash.success
+        div.msg(class='success')= flash['success']
+      if flash.warn
+        div.msg(class='warn')= flash['warn']
 
     block content

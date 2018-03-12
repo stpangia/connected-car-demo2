@@ -9,7 +9,8 @@ exports.device_callback = function(req, res) {
   var result = null;
 
   if (req.params.simulated && req.params.simulated == 'simulated') {
-  	res.render('user', { user: result, flash: {status:'success', message:'Simulated webhook sent'} }); 
+    req.flash('success', 'Simulated webhook sent')
+    res.redirect('/user');
   } else {
 	  // Awknowledge POST
 		res.status(204).send();	
