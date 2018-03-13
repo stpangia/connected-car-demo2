@@ -47,9 +47,10 @@ block content
               form(action='/device_callback/dash/simulated' method='POST')
                 input(type='hidden' name='latitude' value='40.714495')
                 input(type='hidden' name='longitude' value='-73.941731')
-                input(type='hidden' name='vehicleId' value='')
-                input(type='hidden' name='state' value='off')
-                input(type='hidden' name='date' value='2014-08-22T14:48:35+00:00')
+                input(type='hidden' name='deviceVehicleId' value='')
+                input(type='hidden' name='deviceUserId' value=user.device_user_id)
+                input(type='hidden' name='event' value='ignition_off')
+                input(type='hidden' name='timestamp' value=new Date().getTime())
                 button(type='submit') Send webhook
 
           tr
@@ -62,9 +63,10 @@ block content
               form(action='/device_callback/dash/simulated' method='POST')
                 input(type='hidden' name='latitude' value='40.720578')
                 input(type='hidden' name='longitude' value='-73.944312')
-                input(type='hidden' name='vehicleId' value='')
-                input(type='hidden' name='state' value='off')
-                input(type='hidden' name='date' value='2014-08-22T14:48:35+00:00')
+                input(type='hidden' name='deviceVehicleId' value='')
+                input(type='hidden' name='deviceUserId' value=user.device_user_id)
+                input(type='hidden' name='event' value='ignition_off')
+                input(type='hidden' name='timestamp' value=new Date().getTime())
                 button(type='submit') Send webhook
 
 
@@ -78,8 +80,9 @@ block content
               td
                 input(type='text' name='lon' placeholder='longitude')
               td
-                input(type='hidden' name='vehicleId' value='')
-                input(type='hidden' name='state' value='off')
-                input(type='hidden' name='date' value='2014-08-22T14:48:35+00:00')
+                input(type='hidden' name='deviceVehicleId' value='')
+                input(type='hidden' name='deviceUserId' value=user.device_user_id)
+                input(type='hidden' name='event' value='ignition_off')
+                input(type='hidden' name='timestamp' value=new Date().getTime())
                 button(type='submit') Send webhook
 
