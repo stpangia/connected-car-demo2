@@ -28,8 +28,8 @@ exports.device_callback = function(req, res) {
             .then(function (result) {
               if (result) {
 
-                // Continue if last alert > 1 month
-                if (!result.alerted_at || moment().subtract(4, 'w').isAfter(moment(result.alerted_at)) ) {
+                // Continue if last alert > 1 month AND user is opted in
+                if (result.opt_in && (!result.alerted_at || moment().subtract(4, 'w').isAfter(moment(result.alerted_at))) ) {
                   
                   // Lookup location via Foursquare
                   console.log('ok to send alert');
