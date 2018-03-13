@@ -27,8 +27,10 @@ exports.device_callback = function(req, res) {
           db.get('SELECT * FROM users WHERE device_user_id = ?', payload.deviceUserId)
             .then(function (result) {
               if (result) {
+
                 // Continue if last alert > 1 month
-                if (!result.alerted_at || moment(result.alerted_at).subtract(4, 'w').isBefore(moment(result.alerted_at)) ) {
+                if (!result.alerted_at || moment().subtract(4, 'w').isAfter(moment(result.alerted_at)) ) {
+                  
                   // Lookup location via Foursquare
                   console.log('ok to send alert');
                   request({
@@ -45,20 +47,41 @@ exports.device_callback = function(req, res) {
                       json: true
                   })
                     .then(function(body) {
-                      console.log('got FS result');
+                      console.log('got Foursquare result');
                       console.log(body);
                       if (body.response.venues.length && body.response.venues[0].location.distance <= 50) {
+                        
                         // If gas station, send alert
                         console.log('sending alert');
+                        var client = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
+                        client.api.messages.create({
+                          body: 'While you\'re stopped at ' + body.response.venues[0].name + ' remember to check your oil and tire pressure.',
+                          to: result.mobile,
+                          from: process.env.TWILIO_NUMBER,
+                        })
+                          .then(function(data) {
+                            console.log('Alert sent');
 
-                        // And then update alerted_at
-                        console.log('updating alerted_at');
-
+                            // And then update alerted_at
+                            var dbPromise = Promise.resolve()
+                              .then(() => sqlite.open('./database.sqlite', { Promise }))
+                              .then(function(db){
+                                db.run('UPDATE users SET alerted_at = ? WHERE device_user_id = ?', [moment().utc().format(), result.device_user_id])
+                                .then(function () {
+                                  console.log('Updated alerted_at');
+                                })
+                              });                               
+                          })
+                          .catch(function(err) {
+                            console.log('error: ' + err )
+                          });
                       }
                     })
                     .catch(function (err) {
                       console.log('error: ' + err )
                     });
+                } else {
+                  console.log('Supressing alert');
                 }
               } 
             })
