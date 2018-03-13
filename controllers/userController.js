@@ -63,6 +63,7 @@ exports.update = function(req, res) {
 	// sanitize input
 	var mobile = req.body.mobile.replace(/[^0-9]/g,'');
 	var opt_in = !!req.body.opt_in;
+	var alerted_at = req.body.alerted_at ? moment(req.body.alerted_at).utc().format() : null;
 	// validate input 
 	if (mobile.length != 10) {
 		req.flash('warn', 'Invalid cell number. Enter a 10-digit US phone number.')
@@ -72,7 +73,7 @@ exports.update = function(req, res) {
 		var dbPromise = Promise.resolve()
 			.then(() => sqlite.open('./database.sqlite', { Promise }))
 			.then(function(db){
-				db.run('UPDATE users SET mobile = ?, opt_in = ? WHERE device_user_id = ?', [mobile, opt_in, req.session.device.device_user_id])
+				db.run('UPDATE users SET mobile = ?, opt_in = ?, alerted_at = ? WHERE device_user_id = ?', [mobile, opt_in, alerted_at, req.session.device.device_user_id])
 				.then(function () {
 					db.get('SELECT * FROM users WHERE device_user_id = ?', req.session.device.device_user_id)
 						.then(function (result) {
