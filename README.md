@@ -1,6 +1,6 @@
-Connected Car Demo 
+# Connected Car Demo 
 
-Monthly Oil Level & Tire Pressure SMS Reminder Alert 
+## Monthly Oil Level & Tire Pressure SMS Reminder Alert 
 
 ![demo screenshot](https://raw.githubusercontent.com/stpangia/connected-car-demo2/master/public/images/project-graphic.png)
 
